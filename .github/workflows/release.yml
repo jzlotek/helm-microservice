@@ -12,7 +12,7 @@ jobs:
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
-          charts_dir: microservice
+          target_dir: microservice
           charts_url: https://jzlotek.github.io/helm-charts
           owner: jzlotek
           repository: helm-charts
