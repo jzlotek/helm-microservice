@@ -13,6 +13,7 @@ jobs:
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
           target_dir: microservice
+          charts_dir: .
           charts_url: https://jzlotek.github.io/helm-charts
           owner: jzlotek
           repository: helm-charts
