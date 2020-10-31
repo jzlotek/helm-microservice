@@ -15,11 +15,23 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.global.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "microservice.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+  strategy:
+  {{- if not .Values.strategy }}
+    rollingUpdate:
+      maxSurge: 1
+      {{- if eq .Values.global.replicaCount 1.0 }} # HA when replicaCount == 1
+      maxUnavailable: 0
+      {{- else }}
+      maxUnavailable: 1
+      {{- end }}
+  {{- else }}
+    {{ .Values.strategy | indent 4 }}
+  {{- end }}
   template:
     metadata:
       labels:
@@ -55,6 +67,15 @@ spec:
               protocol: {{ .protocol | default "TCP" }}
             {{- end }}
             {{- end }}
+          {{- if .command }}
+          command: [{{ .Values.command | quote }}]
+          {{- end }}
+          {{- if .Values.args }}
+          args: |-
+            {{- range .Values.args }}
+            - {{ . }}
+            {{- end }}
+          {{- end }}
           env:
           {{- range concat (.Values.global.environment) (.Values.environment | default list)}}
           - name: {{ .name | quote}}

@@ -11,15 +11,18 @@ image:
   tag: "latest"
   pullPolicy: IfNotPresent
 
+# override the default entrypoint and arguments
+# command: []
+# args: []
+
 nameOverride: ""
 fullnameOverride: ""
 
-#imagePullSecrets: 
-#serviceAccount: 
+#imagePullSecrets:
+#serviceAccount:
 # Annotation for the Deployment
-annotations: {
+annotations: {}
 
-}
 services:
   - name: web
     type: ClusterIP
@@ -28,7 +31,7 @@ services:
     - port: 8000
       targetPort: 8000
       name: http
-#targetPort: is the port the container accepts traffic on, 
+targetPort: is the port the container accepts traffic on,
 #port: is the abstracted Service port, which can be any port other pods use to access the Service
 #https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/#serviceport-v1-core
 
@@ -37,6 +40,13 @@ services:
 #    value: value1
 #  - name: VAR2
 #    value: value2
+
+### default rollout strategy
+
+# strategy:
+#    rollingUpdate:
+#      maxSurge: 1
+#      maxUnavailable: 1
 
 ingress:
   enabled: false
