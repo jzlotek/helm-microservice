@@ -48,6 +48,10 @@ services:
 #      maxSurge: 1
 #      maxUnavailable: 1
 
+probePort: 8000
+livenessEndpoint: /healthz
+readinessEndpoint: /healthz
+
 ingress:
   enabled: false
   annotations: {}
@@ -65,8 +69,8 @@ ingress:
 
 resources:
   limits:
-    cpu: 2
-    memory: 2000Mi
+    cpu: 25m
+    memory: 64Mi
   requests:
-    cpu: 500m
-    memory: 500Mi
+    cpu: 50m
+    memory: 128Mi
