@@ -12,8 +12,9 @@ image:
   pullPolicy: IfNotPresent
 
 # override the default entrypoint and arguments
-# command: []
-# args: []
+# command: cmd
+# args:
+#  - "arg1"
 
 nameOverride: ""
 fullnameOverride: ""

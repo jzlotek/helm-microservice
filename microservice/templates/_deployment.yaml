@@ -79,13 +79,13 @@ spec:
               port: http
             initialDelaySeconds: 5
             periodSeconds: 5
-          {{- if .command }}
+          {{- if .Values.command }}
           command: [{{ .Values.command | quote }}]
           {{- end }}
           {{- if .Values.args }}
-          args: |-
+          args:
             {{- range .Values.args }}
-            - {{ . }}
+            - {{ . | quote }}
             {{- end }}
           {{- end }}
           env:
