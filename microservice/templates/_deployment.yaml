@@ -67,18 +67,22 @@ spec:
               protocol: {{ .protocol | default "TCP" }}
             {{- end }}
             {{- end }}
+          {{- if .Values.livenessEndpoint }}
           livenessProbe:
             httpGet:
-              path: {{ .Values.livenessEndpoint | default "/healthz" }}
+              path: {{ .Values.livenessEndpoint }}
               port: http
             initialDelaySeconds: 3
             periodSeconds: 3
+          {{- end }}
+          {{- if .Values.readinessEndpoint }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.readinessEndpoint | default "/healthz" }}
+              path: {{ .Values.readinessEndpoint }}
               port: http
             initialDelaySeconds: 5
             periodSeconds: 5
+          {{- end }}
           {{- if .Values.command }}
           command: [{{ .Values.command | quote }}]
           {{- end }}
