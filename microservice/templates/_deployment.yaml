@@ -94,8 +94,15 @@ spec:
           {{- end }}
           env:
           {{- range concat (.Values.global.environment) (.Values.environment | default list)}}
-          - name: {{ .name | quote}}
+          - name: {{ .name | quote }}
+            {{- if .value }}
             value: {{ .value | quote }}
+            {{- else if .valueFrom }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .valueFrom.secretKeyRef.name | quote }}
+                key: {{ .valueFrom.secretKeyRef.key | quote }}
+            {{- end }}
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
