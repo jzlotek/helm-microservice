@@ -11,6 +11,11 @@ image:
   tag: "latest"
   pullPolicy: IfNotPresent
 
+configMaps:
+  - name: my-configmap
+    mountPath: /config
+    subPath: map.yaml
+
 # override the default entrypoint and arguments
 # command: cmd
 # args:

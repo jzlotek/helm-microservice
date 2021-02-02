@@ -55,10 +55,27 @@ spec:
         {{- end }}
       {{- end }}
       {{- end }}
+      {{- if .Values.configMaps }}
+      volumes:
+        {{- $ms_name := .Release.Name }}
+        {{- range .Values.configMaps }}
+        - name: {{ .name }}-{{ $ms_name }}
+          configMap:
+            name: {{ .name }}
+        {{- end}}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.configMaps }}
+          volumeMounts:
+            {{- range .Values.configMaps }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}/{{ .subPath }}
+              subPath: {{ .subPath }}
+            {{- end }}
+          {{- end }}
           ports:
             {{- range .Values.services -}}
             {{- range $port:= .specs}}
