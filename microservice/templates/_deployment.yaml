@@ -59,7 +59,7 @@ spec:
       volumes:
         {{- $ms_name := .Release.Name }}
         {{- range .Values.configMaps }}
-        - name: {{ .name }}-{{ $ms_name }}
+        - name: {{ .name }}-{{ $ms_name }}-volume
           configMap:
             name: {{ .name }}
         {{- end}}
@@ -70,10 +70,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.configMaps }}
           volumeMounts:
+            {{- $ms_name := .Release.Name }}
             {{- range .Values.configMaps }}
-            - name: {{ .name }}
-              mountPath: {{ .mountPath }}/{{ .subPath }}
-              subPath: {{ .subPath }}
+            - name: {{ .name }}-{{ $ms_name }}-volume
+              mountPath: {{ .mountPath }}
             {{- end }}
           {{- end }}
           ports:
