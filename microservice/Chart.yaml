@@ -2,7 +2,7 @@
 apiVersion: v2
 name: microservice
 version: 0.3.10
-appVersion: 0.3.19
+appVersion: 0.3.10
 description: A Helm chart which provide a DRY microservice deployment mechanism
 keywords:
   - microservice
