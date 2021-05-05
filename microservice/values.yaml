@@ -68,9 +68,10 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
-      servicePort: 8000
-      serviceName: web
+      port: 8000
       path: /
+      serviceName: web
+
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

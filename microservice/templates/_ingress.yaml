@@ -31,10 +31,13 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-          - path: {{ .path }}
+          - pathType: Prefix
+            path: {{ .path }}
             backend:
-              serviceName: {{ include "microservice.fullname" $root }}-svc-{{ .serviceName }}
-              servicePort: {{ .servicePort }}
+              service:
+                name: {{ include "microservice.fullname" $root }}-svc-{{ .serviceName }}
+                port:
+                  number: {{ .port }}
   {{- end }}
 {{- end -}}
 {{- end -}}
